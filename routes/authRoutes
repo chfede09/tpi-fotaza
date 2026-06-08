@@ -1,0 +1,16 @@
+const express = require('express');
+const router = express.Router();
+const authController = require('../controllers/authController');
+
+// 1. Rutas para Mostrar los Formularios en el Navegador (GET)
+router.get('/register', authController.renderRegister);
+router.get('/login', authController.renderLogin);
+
+// 2. Rutas para Procesar los Datos que envía el Usuario (POST)
+router.post('/register', authController.handleRegister);
+router.post('/login', authController.handleLogin);
+
+// 3. Ruta para Cerrar la Sesión Activa (GET)
+router.get('/logout', authController.handleLogout);
+
+module.exports = router;

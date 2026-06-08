@@ -1,0 +1,35 @@
+doctype html
+html(lang="es")
+    head
+        meta(charset="UTF-8")
+        title #{title || 'Registro - Fotaza'}
+        style.
+            body { font-family: Arial, sans-serif; margin: 50px; background-color: #f4f4f9; }
+            .form-container { max-width: 400px; margin: 0 auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+            .form-group { margin-bottom: 15px; }
+            label { display: block; margin-bottom: 5px; font-weight: bold; }
+            input { width: 100%; padding: 8px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; }
+            button { width: 100%; padding: 10px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; }
+            button:hover { background-color: #0056b3; }
+            .error { color: red; background-color: #ffe6e6; padding: 10px; border-radius: 4px; margin-bottom: 15px; border: 1px solid #f5c6cb; }
+            .login-link { text-align: center; margin-top: 15px; display: block; color: #007bff; text-decoration: none; }
+    body
+        .form-container
+            h2 Registrar nuevo usuario
+            
+            if error
+                .error= error
+
+            form(action="/auth/register" method="POST")
+                .form-group
+                    label(for="username") Nombre de usuario:
+                    input(type="text" id="username" name="username" placeholder="Ej: fede_dev" required)
+                .form-group
+                    label(for="email") Correo Electrónico:
+                    input(type="email" id="email" name="email" placeholder="usuario@correo.com" required)
+                .form-group
+                    label(for="password") Contraseña:
+                    input(type="password" id="password" name="password" placeholder="Mínimo 6 caracteres" required)
+                button(type="submit") Crear Cuenta
+            
+            a.login-link(href="/auth/login") ¿Ya tenés cuenta? Inicia sesión acá
