@@ -29,11 +29,15 @@ async function initDatabase() {
         const sqlPath = path.join(__dirname, '../database.sql');
         const sql = fs.readFileSync(sqlPath, 'utf8');
 
-        // Separamos las consultas individuales quitando líneas vacías o comentarios
-        const queries = sql
-            .split(/;\s*$/m)
+        // Quitar comentarios multilinea (/* ... */) y de una sola linea (-- o #)
+        let cleanSql = sql.replace(/\/\*[\s\S]*?\*\//g, '');
+        cleanSql = cleanSql.replace(/(--|#).*$/gm, '');
+
+        // Separamos las consultas individuales
+        const queries = cleanSql
+            .split(';')
             .map(query => query.trim())
-            .filter(query => query.length > 0 && !query.startsWith('--'));
+            .filter(query => query.length > 0);
 
         console.log('Creando base de datos y estructuras de tablas...');
         
