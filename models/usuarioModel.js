@@ -24,8 +24,8 @@ Usuario.crear = async (datosOUsername, email, passwordHash) => {
     }
 
     const [result] = await db.query(
-        'INSERT INTO usuarios (username, email, password, rol) VALUES (?, ?, ?, "registrado")',
-        [username, mail, pass]
+        'INSERT INTO usuarios (username, email, password, rol) VALUES (?, ?, ?, ?)',
+        [username, mail, pass, 'registrado']
     );
     return result.insertId;
 };
