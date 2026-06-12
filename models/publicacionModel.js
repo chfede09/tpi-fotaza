@@ -16,9 +16,18 @@ Publicacion.obtenerTodas = async () => {
 
 // Creo una publicación
 Publicacion.crear = async (datos) => {
-    const { titulo, descripcion, imagen_url, usuario_id } = datos;
-    const sql = 'INSERT INTO publicaciones (titulo, descripcion, url_imagen, id_autor) VALUES (?, ?, ?, ?)';
-    const [result] = await db.query(sql, [titulo, descripcion, imagen_url, usuario_id]);
+    const { titulo, descripcion, imagen_url, usuario_id, fecha_creacion } = datos;
+    
+    let sql, params;
+    if (fecha_creacion) {
+        sql = 'INSERT INTO publicaciones (titulo, descripcion, url_imagen, id_autor, fecha_creacion) VALUES (?, ?, ?, ?, ?)';
+        params = [titulo, descripcion, imagen_url, usuario_id, fecha_creacion];
+    } else {
+        sql = 'INSERT INTO publicaciones (titulo, descripcion, url_imagen, id_autor) VALUES (?, ?, ?, ?)';
+        params = [titulo, descripcion, imagen_url, usuario_id];
+    }
+    
+    const [result] = await db.query(sql, params);
     return result.insertId;
 };
 

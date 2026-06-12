@@ -55,14 +55,15 @@ exports.handleNuevaPublicacion = async (req, res) => {
         return res.redirect('/auth/login');
     }
 
-    const { titulo, descripcion, imagen_url } = req.body;
+    const { titulo, descripcion, imagen_url, fecha_creacion } = req.body;
 
     try {
         await Publicacion.crear({
             titulo,
             descripcion,
             imagen_url,
-            usuario_id: req.session.userId
+            usuario_id: req.session.userId,
+            fecha_creacion: fecha_creacion || null
         });
         return res.redirect('/publicaciones');
     } catch (error) {

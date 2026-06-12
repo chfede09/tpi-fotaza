@@ -35,6 +35,10 @@ html(lang="es")
                     label(for="descripcion") Descripción o Epígrafe:
                     textarea(id="descripcion" name="descripcion" placeholder="Contanos más sobre esta foto...")
                 
+                .form-group
+                    label(for="fecha_creacion") Fecha y Hora de Publicación (Opcional):
+                    input(type="datetime-local" id="fecha_creacion" name="fecha_creacion")
+                
                 button.btn-submit(type="submit") Publicar Foto
             
             a.btn-back(href="/publicaciones") ⬅ Volver al Feed

@@ -1,5 +1,6 @@
 -- 1. Crear la base de datos 
-CREATE DATABASE IF NOT EXISTS fotaza_db;
+DROP DATABASE IF EXISTS fotaza_db;
+CREATE DATABASE fotaza_db;
 USE fotaza_db;
 
 -- 2. Tabla de Usuarios
@@ -19,6 +20,7 @@ CREATE TABLE publicaciones (
     id_autor INT NOT NULL,
     titulo VARCHAR(150) NOT NULL,
     descripcion TEXT NULL,
+    url_imagen VARCHAR(255) NOT NULL,
     comentarios_abiertos BOOLEAN DEFAULT TRUE,
     fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (id_autor) REFERENCES usuarios(id) ON DELETE CASCADE
