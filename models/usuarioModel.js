@@ -1,15 +1,15 @@
 const db = require('../config/db');
 
-// Definimos el objeto contenedor
+// Defino el objeto contenedor
 const Usuario = {};
 
-// 1. Método para buscar por email
+// 1. Realizo un método para buscar por email
 Usuario.buscarPorEmail = async (email) => {
     const [rows] = await db.query('SELECT * FROM usuarios WHERE email = ?', [email]);
     return rows[0];
 };
 
-// 2. Método para crear (Soporta objetos o parámetros sueltos)
+// 2. Realizo un método para crear 
 Usuario.crear = async (datosOUsername, email, passwordHash) => {
     let username, mail, pass;
 
@@ -30,5 +30,5 @@ Usuario.crear = async (datosOUsername, email, passwordHash) => {
     return result.insertId;
 };
 
-// 3. EXPORTACIÓN EXPLÍCITA (Crucial para que el controlador lo vea)
+// 3. Exportacion 
 module.exports = Usuario;

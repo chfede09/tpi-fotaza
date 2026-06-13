@@ -1,12 +1,12 @@
 const Publicacion = require('../models/publicacionModel');
 const Comentario = require('../models/comentarioModel');
 
-// 1. Mostrar el Feed principal con todas las fotos e hilos de comentarios
+// 1. se muestra el Feed principal con todas las fotos e hilos de comentarios
 exports.mostrarFeed = async (req, res) => {
     try {
         const publicaciones = await Publicacion.obtenerTodas();
         
-        // Buscamos los comentarios para cada una de las publicaciones
+        // Busco  los comentarios para cada una de las publicaciones
         for (let post of publicaciones) {
             post.comentarios = await Comentario.obtenerPorPublicacion(post.id);
         }
@@ -23,7 +23,7 @@ exports.mostrarFeed = async (req, res) => {
     }
 };
     
-// 2. Procesar el envío del formulario de comentarios
+// 2. Proceso el envío del formulario de comentarios
 exports.agregarComentario = async (req, res) => {
     try {
         const { contenido, publicacion_id } = req.body;
@@ -41,7 +41,7 @@ exports.agregarComentario = async (req, res) => {
     }
 };
 
-// 3. Mostrar el formulario para subir una nueva foto
+// 3. Muestro el formulario para subir una nueva foto
 exports.formularioNuevaPublicacion = (req, res) => {
     if (!req.session.userId) {
         return res.redirect('/auth/login');
@@ -49,7 +49,7 @@ exports.formularioNuevaPublicacion = (req, res) => {
     return res.render('nuevaPublicacion', { title: 'Subir Foto - Fotaza' });
 };
 
-// 4. Procesar el envío del formulario de nueva publicación
+// 4. Proceso el envío del formulario de nueva publicación
 exports.handleNuevaPublicacion = async (req, res) => {
     if (!req.session.userId) {
         return res.redirect('/auth/login');
@@ -74,7 +74,7 @@ exports.handleNuevaPublicacion = async (req, res) => {
     }
 };
 
-// 5. Mostrar la pantalla de "Mis Fotos" (Galería Personal)
+// 5. Muestro la pantalla de "Mis Fotos" 
 exports.mostrarMisFotos = async (req, res) => {
     try {
         const usuario_id = req.session.userId;
@@ -82,10 +82,10 @@ exports.mostrarMisFotos = async (req, res) => {
             return res.redirect('/auth/login');
         }
 
-        // Buscamos solo las publicaciones que pertenecen al usuario logueado
+        // Busco solo las publicaciones que pertenecen al usuario logueado
         const publicaciones = await Publicacion.obtenerPorUsuario(usuario_id);
         
-        // También les cargamos sus respectivos comentarios
+        // También les cargo sus respectivos comentarios
         for (let post of publicaciones) {
             post.comentarios = await Comentario.obtenerPorPublicacion(post.id);
         }
@@ -100,7 +100,7 @@ exports.mostrarMisFotos = async (req, res) => {
     }
 };
 
-// 6. Procesar el borrado de una publicación
+// 6. Proceso el borrado de una publicación
 exports.eliminarPublicacion = async (req, res) => {
     try {
         const { id } = req.params; 

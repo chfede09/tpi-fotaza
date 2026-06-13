@@ -1,4 +1,4 @@
--- 1. Crear la base de datos (si no existe) y usarla
+-- 1. Crear la base de datos 
 CREATE DATABASE IF NOT EXISTS fotaza_db;
 USE fotaza_db;
 
@@ -24,7 +24,7 @@ CREATE TABLE publicaciones (
     FOREIGN KEY (id_autor) REFERENCES usuarios(id) ON DELETE CASCADE
 );
 
--- 4. Tabla de Recursos (Imágenes y Videos asociados a la publicación)
+-- 4. Tabla de Recursos (Imágenes y Videos)
 CREATE TABLE recursos (
     id INT AUTO_INCREMENT PRIMARY KEY,
     id_publicacion INT NOT NULL,
@@ -46,7 +46,7 @@ CREATE TABLE comentarios (
     FOREIGN KEY (id_autor) REFERENCES usuarios(id) ON DELETE CASCADE
 );
 
--- 6. Tabla de Denuncias (Para publicaciones y comentarios)
+-- 6. Tabla de Denuncias 
 CREATE TABLE denuncias (
     id INT AUTO_INCREMENT PRIMARY KEY,
     id_usuario_denunciante INT NOT NULL,
@@ -58,7 +58,7 @@ CREATE TABLE denuncias (
     FOREIGN KEY (id_usuario_denunciante) REFERENCES usuarios(id) ON DELETE CASCADE
 );
 
--- 7. Tabla de Valoraciones (Clave primaria compuesta para evitar duplicados)
+-- 7. Tabla de Valoraciones 
 CREATE TABLE valoraciones (
     id_usuario INT NOT NULL,
     id_publicacion INT NOT NULL,
@@ -68,7 +68,7 @@ CREATE TABLE valoraciones (
     FOREIGN KEY (id_publicacion) REFERENCES publicaciones(id) ON DELETE CASCADE
 );
 
--- 8. Tabla de Seguidores (Clave primaria compuesta)
+-- 8. Tabla de Seguidores 
 CREATE TABLE seguidores (
     id_seguidor INT NOT NULL,
     id_seguido INT NOT NULL,

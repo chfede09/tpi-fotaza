@@ -2,7 +2,7 @@ const db = require('../config/db');
 
 const Publicacion = {};
 
-// Obtener todas las publicaciones (para el Feed)
+// Obtengo todas las publicaciones
 Publicacion.obtenerTodas = async () => {
     const sql = `
         SELECT p.*, u.username 
@@ -14,7 +14,7 @@ Publicacion.obtenerTodas = async () => {
     return rows;
 };
 
-// Crear una publicación
+// Creo una publicación
 Publicacion.crear = async (datos) => {
     const { titulo, descripcion, imagen_url, usuario_id } = datos;
     const sql = 'INSERT INTO publicaciones (titulo, descripcion, url_imagen, id_autor) VALUES (?, ?, ?, ?)';
@@ -22,7 +22,7 @@ Publicacion.crear = async (datos) => {
     return result.insertId;
 };
 
-// NUEVO: Obtener solo las publicaciones de un usuario específico (para "Mis Fotos")
+//  Obtengo solo las publicaciones de un usuario específico
 Publicacion.obtenerPorUsuario = async (usuarioId) => {
     const sql = `
         SELECT p.*, u.username 
@@ -35,9 +35,9 @@ Publicacion.obtenerPorUsuario = async (usuarioId) => {
     return rows;
 };
 
-// NUEVO: Eliminar una publicación de la base de datos
+// Elimino una publicación de la base de datos
 Publicacion.eliminar = async (idPublicacion, idAutor) => {
-    // Agregamos id_autor en el WHERE por seguridad, para que nadie pueda borrar un post ajeno mediante URL
+    // Agrego id_autor en el WHERE por seguridad
     const sql = 'DELETE FROM publicaciones WHERE id = ? AND id_autor = ?';
     const [result] = await db.query(sql, [idPublicacion, idAutor]);
     return result.affectedRows > 0;

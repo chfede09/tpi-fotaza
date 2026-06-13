@@ -4,12 +4,23 @@ const mysql = require('mysql2/promise');
 require('dotenv').config();
 
 async function initDatabase() {
-    // Conexión inicial al servidor MySQL local sin base de datos asignada
-    const connection = await mysql.createConnection({
+    // Configuración adaptada para soportar conexiones seguras locales (XAMPP) y remotas (Aiven)
+    const connectionConfig = {
         host: process.env.DB_HOST,
         user: process.env.DB_USER,
-        password: process.env.DB_PASS
-    });
+        password: process.env.DB_PASSWORD, // Arreglado: Antes decía DB_PASS
+        port: process.env.DB_PORT ? parseInt(process.env.DB_PORT) : 3306 // Agregado: Soporta puertos dinámicos
+    };
+
+    // Si detecta que nos conectamos a Aiven (remoto), le activa el SSL obligatorio
+    if (process.env.DB_HOST && process.env.DB_HOST.includes('aivencloud.com')) {
+        connectionConfig.ssl = {
+            rejectUnauthorized: false
+        };
+    }
+
+    // Conexión al servidor MySQL
+    const connection = await mysql.createConnection(connectionConfig);
 
     console.log('Conectado al servidor MySQL...');
 
@@ -30,7 +41,7 @@ async function initDatabase() {
             await connection.query(query);
         }
 
-        console.log('¡Base de datos e integridad de tablas inicializadas con éxito en XAMPP!');
+        console.log('¡Base de datos e integridad de tablas inicializadas con éxito en la nube!');
     } catch (error) {
         console.error('Error al inicializar la base de datos:', error);
     } finally {
